@@ -1,0 +1,22 @@
+# Changelog
+
+## 0.1.0 (2026-01-11)
+
+
+### Features
+
+* add registration script and enhanced documentation for Claude Code ([58a4cc8](https://github.com/VinylStage/discord-mcp-alert/commit/58a4cc8adaa2a30d5fc4eb08b5da37ba4a9b52d7))
+* initial implementation of discord mcp alert server ([d128189](https://github.com/VinylStage/discord-mcp-alert/commit/d12818977141694884ea4e841537d97e215617ec))
+
+
+### Bug Fixes
+
+* regenerate poetry.lock to match pyproject.toml ([31afb8c](https://github.com/VinylStage/discord-mcp-alert/commit/31afb8c2a187920b0c8c48543478dab47caa6966))
+* resolve ModuleNotFoundError by adding project root to sys.path in server.py ([518679e](https://github.com/VinylStage/discord-mcp-alert/commit/518679eedc6c11c74c51cee89f9cc738f7d35d1c))
+* update license format and refresh lock file ([f045cfc](https://github.com/VinylStage/discord-mcp-alert/commit/f045cfceb03c5a8ec0845f2656a22d4003334802))
+* update release-please to googleapis/release-please-action ([173bd23](https://github.com/VinylStage/discord-mcp-alert/commit/173bd2331599d25de177315edc013eaa865559a3))
+
+
+### Documentation
+
+* update repository URLs to match remote origin ([2e84c7d](https://github.com/VinylStage/discord-mcp-alert/commit/2e84c7dc23e816407644ffd8ab29fc37d77caa24))
