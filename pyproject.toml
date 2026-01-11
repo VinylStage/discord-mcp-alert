@@ -24,8 +24,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/vinyl/discord_mcp_alert"
-Repository = "https://github.com/vinyl/discord_mcp_alert"
+Homepage = "https://github.com/VinylStage/discord-mcp-alert"
+Repository = "https://github.com/VinylStage/discord-mcp-alert"
 
 [project.scripts]
 discord-mcp-alert = "src.server:main"

@@ -14,8 +14,8 @@
 
 1. **저장소 클론**:
    ```bash
-   git clone https://github.com/vinyl/discord_mcp_alert.git
-   cd discord_mcp_alert
+   git clone https://github.com/VinylStage/discord-mcp-alert.git
+   cd discord-mcp-alert
    ```
 
 2. **의존성 설치 (Poetry)**:
