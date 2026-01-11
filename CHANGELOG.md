@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.2.0](https://github.com/VinylStage/discord-mcp-alert/compare/v0.1.1...v0.2.0) (2026-01-11)
+
+
+### Features
+
+* add Claude Code hooks for auto Discord notifications ([3529dc3](https://github.com/VinylStage/discord-mcp-alert/commit/3529dc3dddd562e9a2b9dd8b1b4c40575f31ff42))
+* add Notification event support with per-event debounce ([6503ca6](https://github.com/VinylStage/discord-mcp-alert/commit/6503ca60b6d5a861b4d1bd56ea8b752756b12fc1))
+* enhance hook with project context info ([9917668](https://github.com/VinylStage/discord-mcp-alert/commit/99176689e8fac7bcf51810386884c9974a42bccf))
+
+
+### Bug Fixes
+
+* add flock atomic locking to prevent duplicate notifications ([52fef01](https://github.com/VinylStage/discord-mcp-alert/commit/52fef01f392d5f4180c57586961445697783c9e9))
+* remove duplicate project-level hook settings ([82b736b](https://github.com/VinylStage/discord-mcp-alert/commit/82b736b287d9ef4c741a6d934a6beadb03c39bb9))
+
 ## [0.1.1](https://github.com/VinylStage/discord-mcp-alert/compare/v0.1.0...v0.1.1) (2026-01-11)
 
 
