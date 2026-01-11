@@ -1,6 +1,6 @@
 [project]
 name = "discord-mcp-alert"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Model Context Protocol (MCP) server for sending Discord notifications."
 authors = [
     {name = "VinylStage", email = "mcpe9869@gmail.com"}
