@@ -13,8 +13,6 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: google-github-actions/release-please-action@v4
+      - uses: googleapis/release-please-action@v4
         with:
-          # release-type: python으로 설정하면 version.txt나 pyproject.toml 등을 관리해줌
           release-type: python
-          package-name: discord-mcp-alert
