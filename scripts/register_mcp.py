@@ -8,7 +8,7 @@ from pathlib import Path
 SERVER_NAME = "discord-alert"
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 POETRY_CMD = "poetry"  # Assuming poetry is in PATH
-SRC_SERVER_PATH = PROJECT_ROOT / "src" / "server.py"
+SRC_SERVER_PATH = PROJECT_ROOT / "src" / "discord_mcp_alert" / "server.py"
 
 def get_claude_desktop_config_path():
     """Returns the path to the Claude Desktop config file."""

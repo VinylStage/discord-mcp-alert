@@ -37,7 +37,7 @@ poetry run python scripts/register_mcp.py
         "/path/to/discord_mcp_alert", // 프로젝트 절대 경로
         "run",
         "python",
-        "/path/to/discord_mcp_alert/src/server.py" // 서버 파일 절대 경로
+        "/path/to/discord_mcp_alert/src/discord_mcp_alert/server.py" // 서버 파일 절대 경로
       ],
       "cwd": "/path/to/discord_mcp_alert",
       "env": {
@@ -53,7 +53,7 @@ poetry run python scripts/register_mcp.py
 터미널에서 MCP 도구를 사용하려면 다음 명령어로 등록합니다.
 
 ```bash
-claude mcp add discord-alert "poetry --directory /absolute/path/to/project run python /absolute/path/to/project/src/server.py"
+claude mcp add discord-alert "poetry --directory /absolute/path/to/project run python /absolute/path/to/project/src/discord_mcp_alert/server.py"
 ```
 
 ## 3. 환경 변수

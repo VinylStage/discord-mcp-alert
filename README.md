@@ -46,7 +46,7 @@
 
 ```bash
 # 단순 알림 테스트
-poetry run python -m src.main
+poetry run python -m discord_mcp_alert.main
 
 # MCP 서버 연동 검증
 poetry run python tests/verify_mcp.py

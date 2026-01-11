@@ -23,7 +23,10 @@ Homepage = "https://github.com/VinylStage/discord-mcp-alert"
 Repository = "https://github.com/VinylStage/discord-mcp-alert"
 
 [project.scripts]
-discord-mcp-alert = "src.server:main"
+discord-mcp-alert = "discord_mcp_alert.server:main"
+
+[tool.poetry]
+packages = [{include = "discord_mcp_alert", from = "src"}]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

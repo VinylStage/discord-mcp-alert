@@ -1,5 +1,5 @@
 import sys
-from src.notifier import send_discord_notification
+from discord_mcp_alert.notifier import send_discord_notification
 
 def main():
     print("Sending test notification to Discord...")

@@ -5,7 +5,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from mcp.server.fastmcp import FastMCP
-from src.notifier import send_discord_notification
+from discord_mcp_alert.notifier import send_discord_notification
 
 # Initialize the MCP server
 mcp = FastMCP("Discord Alert MCP")

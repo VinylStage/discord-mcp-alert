@@ -12,7 +12,7 @@ async def verify_mcp_server():
     # We use the same command as the registration script: poetry run python src/server.py
     server_params = StdioServerParameters(
         command="poetry",
-        args=["run", "python", "src/server.py"],
+        args=["run", "python", "src/discord_mcp_alert/server.py"],
         env=os.environ.copy(), # Pass current env (including PATH)
     )
 

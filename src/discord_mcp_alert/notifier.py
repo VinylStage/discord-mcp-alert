@@ -1,5 +1,5 @@
 import requests
-from src.config import DISCORD_WEBHOOK_URL
+from discord_mcp_alert.config import DISCORD_WEBHOOK_URL
 
 def send_discord_notification(content: str):
     """
