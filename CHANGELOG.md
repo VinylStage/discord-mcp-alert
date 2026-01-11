@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/VinylStage/discord-mcp-alert/compare/v0.1.0...v0.1.1) (2026-01-11)
+
+
+### Documentation
+
+* add PyPI trusted publishing setup guide ([df8bf50](https://github.com/VinylStage/discord-mcp-alert/commit/df8bf50a7682b279895f577d8edfe5c15cc6f325))
+
 ## 0.1.0 (2026-01-11)
 
 
