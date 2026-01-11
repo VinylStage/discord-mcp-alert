@@ -1,3 +1,9 @@
+import sys
+import os
+
+# Add the project root to sys.path to allow importing from src
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from mcp.server.fastmcp import FastMCP
 from src.notifier import send_discord_notification
 
