@@ -82,6 +82,22 @@ poetry run python scripts/register_mcp.py
 claude mcp add discord-alert "poetry --directory /Users/vinyl/vinylstudio/discord_mcp_alert run python src/server.py"
 ```
 
+## 실행 및 검증
+
+개발 중이거나 서버 상태를 확인하고 싶을 때 다음 스크립트를 활용하세요.
+
+- **단순 알림 테스트**:
+  Discord 웹훅이 정상 작동하는지 확인합니다.
+  ```bash
+  poetry run python -m src.main
+  ```
+
+- **MCP 서버 연동 검증**:
+  실제 MCP 프로토콜을 통해 도구가 정상적으로 노출되는지 확인합니다.
+  ```bash
+  poetry run python tests/verify_mcp.py
+  ```
+
 ## 사용 방법
 
 연동 후 Claude에게 다음과 같이 요청할 수 있습니다:
