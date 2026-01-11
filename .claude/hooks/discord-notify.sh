@@ -1,7 +1,15 @@
 #!/bin/bash
 
-# Discord Webhook URL
-WEBHOOK_URL="https://discord.com/api/webhooks/1446163806886826085/i7Lx7TCMoHFrZHJ4Y6sOcXMHh9H7yucgo_NgobBL_GyPJY2lE49NwP_IcCBaP6-lJwNz"
+# Load webhook URL from config file
+CONFIG_FILE="$HOME/.claude/discord-webhook.conf"
+if [ ! -f "$CONFIG_FILE" ]; then
+  exit 0
+fi
+WEBHOOK_URL=$(cat "$CONFIG_FILE" | tr -d '\n')
+
+if [ -z "$WEBHOOK_URL" ]; then
+  exit 0
+fi
 
 # Read hook input from stdin
 input=$(cat)
@@ -11,10 +19,12 @@ session_id=$(echo "$input" | jq -r '.session_id // "unknown"' | cut -c1-8)
 cwd=$(echo "$input" | jq -r '.cwd // "unknown"')
 project_name=$(basename "$cwd")
 
-# Atomic lock with flock - only first caller proceeds
-LOCK_FILE="/tmp/claude-discord-${session_id}.lock"
-exec 200>"$LOCK_FILE"
-flock -n 200 || exit 0
+# macOS compatible atomic lock using mkdir
+LOCK_DIR="/tmp/claude-discord-${session_id}.lock"
+if ! mkdir "$LOCK_DIR" 2>/dev/null; then
+  exit 0
+fi
+trap "rmdir '$LOCK_DIR' 2>/dev/null" EXIT
 
 # Check timestamp for debounce (5 seconds)
 NOW=$(date +%s)
