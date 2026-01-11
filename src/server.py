@@ -27,5 +27,9 @@ def notify_discord(message: str) -> str:
     except Exception as e:
         return f"Failed to send notification: {str(e)}"
 
-if __name__ == "__main__":
+def main():
+    """Entry point for the MCP server."""
     mcp.run()
+
+if __name__ == "__main__":
+    main()

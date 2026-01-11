@@ -1,0 +1,42 @@
+name: Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+
+    - name: Install dependencies
+      run: poetry install --no-interaction --no-root
+
+    - name: Run verification test
+      # 환경변수가 없어 실제 웹훅 전송은 실패할 수 있으므로, 
+      # verify_mcp.py가 실제 전송 없이도 도구 목록만 체크하도록 되어 있는지 확인 필요.
+      # 현재 verify_mcp.py는 list_tools만 호출하므로 웹훅 URL 없이도 통과해야 함.
+      # 단, src/config.py에서 .env 로드 실패 시 에러가 날 수 있음.
+      # CI 환경에서는 더미 환경변수를 주입해야 함.
+      env:
+        DISCORD_WEBHOOK_URL: "https://discord.com/api/webhooks/dummy/dummy"
+      run: |
+        poetry run python tests/verify_mcp.py
