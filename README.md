@@ -33,9 +33,9 @@ cd discord-mcp-alert
 - ✅ Claude Desktop 자동 등록
 - ✅ Claude Code CLI 등록 명령어 제공
 
-### Claude Code CLI 등록
+### Claude Code CLI 전역 등록
 
-Claude Code CLI에서 사용하려면:
+**한 번 등록하면 모든 프로젝트에서 사용 가능합니다!**
 
 ```bash
 ./register_claude_cli.sh
@@ -44,8 +44,10 @@ Claude Code CLI에서 사용하려면:
 또는 수동으로:
 
 ```bash
-claude mcp add discord-alert "poetry --directory $(pwd) run python $(pwd)/src/discord_mcp_alert/server.py"
+claude mcp add --scope user discord-alert -- bash -c "cd $(pwd) && poetry run python -m discord_mcp_alert.server"
 ```
+
+**중요**: `--scope user` 옵션으로 전역 등록하면 어느 프로젝트에서든 Discord 알림을 보낼 수 있습니다.
 
 ### 수동 설치 (옵션)
 

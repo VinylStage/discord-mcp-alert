@@ -27,7 +27,9 @@ MCP 서버를 Claude Desktop이나 Claude Code(CLI)와 연동하기 위한 상�
 poetry run python scripts/register_mcp.py
 ```
 
-### Claude Code CLI만 등록
+### Claude Code CLI 전역 등록
+
+**한 번 등록하면 모든 프로젝트에서 사용 가능합니다!**
 
 ```bash
 ./register_claude_cli.sh
@@ -72,19 +74,20 @@ poetry run python scripts/register_mcp.py
 
 ### Claude Code (CLI)
 
-터미널에서 MCP 도구를 사용하려면 다음 명령어로 등록합니다.
+터미널에서 MCP 도구를 사용하려면 다음 명령어로 **전역 등록**합니다.
 
 **자동 스크립트 사용 (권장):**
 ```bash
 ./register_claude_cli.sh
 ```
 
-**수동 등록:**
+**수동 전역 등록:**
 ```bash
-claude mcp add discord-alert -- bash -c "cd /absolute/path/to/discord-mcp-alert && poetry run python -m discord_mcp_alert.server"
+claude mcp add --scope user discord-alert -- bash -c "cd /absolute/path/to/discord-mcp-alert && poetry run python -m discord_mcp_alert.server"
 ```
 
 **중요 사항:**
+- `--scope user` 옵션으로 **전역 등록**하면 모든 프로젝트에서 사용 가능합니다
 - `bash -c` 래퍼를 사용하여 작업 디렉토리를 프로젝트 루트로 변경합니다
 - 이렇게 하면 `.env` 파일을 올바르게 로드할 수 있습니다
 - 절대 경로를 사용해야 어느 디렉토리에서든 작동합니다
@@ -93,9 +96,16 @@ claude mcp add discord-alert -- bash -c "cd /absolute/path/to/discord-mcp-alert 
 ```bash
 claude mcp list
 
-# 성공 예시:
+# 성공 예시 (전역 등록):
 # discord-alert: bash -c cd "/path/to/discord-mcp-alert" && poetry run python -m discord_mcp_alert.server - ✓ Connected
 ```
+
+**등록 범위 (Scope):**
+
+| 범위 | 설명 | 사용 예시 |
+|------|------|-----------|
+| `user` (전역) | 모든 프로젝트에서 사용 가능 | **권장** - Discord 알림은 어디서든 필요 |
+| `local` (프로젝트별) | 현재 프로젝트에서만 사용 | 특정 프로젝트 전용 MCP 서버 |
 
 ## 3. 환경 변수
 
@@ -165,15 +175,15 @@ cd "$SCRIPT_DIR"
 
 **해결 방법:**
 
-1. **MCP 서버 재등록:**
+1. **MCP 서버 전역 재등록:**
    ```bash
    ./register_claude_cli.sh
    ```
 
-2. **수동 재등록:**
+2. **수동 전역 재등록:**
    ```bash
    claude mcp remove discord-alert
-   claude mcp add discord-alert -- bash -c "cd $(pwd) && poetry run python -m discord_mcp_alert.server"
+   claude mcp add --scope user discord-alert -- bash -c "cd $(pwd) && poetry run python -m discord_mcp_alert.server"
    ```
 
 3. **`.env` 파일 확인:**

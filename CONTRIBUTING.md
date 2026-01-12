@@ -45,10 +45,12 @@ cd discord-mcp-alert
    poetry run python tests/test_notify_tool.py
    ```
 
-5. **MCP 서버 로컬 등록** (선택사항):
+5. **MCP 서버 전역 등록** (선택사항):
    ```bash
    ./register_claude_cli.sh
    ```
+
+   이렇게 하면 모든 프로젝트에서 Discord 알림을 사용할 수 있습니다.
 
 ## 코드 스타일 및 규칙
 

@@ -90,15 +90,17 @@ poetry run python tests/test_notify_tool.py
 poetry run python scripts/register_mcp.py
 ```
 
-**Claude Code CLI:**
+**Claude Code CLI (전역 등록):**
 ```bash
 ./register_claude_cli.sh
 ```
 
 또는 수동으로:
 ```bash
-claude mcp add discord-alert -- bash -c "cd $(pwd) && poetry run python -m discord_mcp_alert.server"
+claude mcp add --scope user discord-alert -- bash -c "cd $(pwd) && poetry run python -m discord_mcp_alert.server"
 ```
+
+**중요**: `--scope user` 옵션으로 전역 등록하면 어느 프로젝트에서든 사용 가능합니다.
 
 ## 포터블 설치
 
@@ -145,12 +147,12 @@ cp .env.example .env
 
 ### MCP 연결 실패
 ```bash
-# MCP 서버 재등록
+# MCP 서버 재등록 (전역)
 ./register_claude_cli.sh
 
-# 또는
+# 또는 수동으로 전역 재등록
 claude mcp remove discord-alert
-claude mcp add discord-alert -- bash -c "cd $(pwd) && poetry run python -m discord_mcp_alert.server"
+claude mcp add --scope user discord-alert -- bash -c "cd $(pwd) && poetry run python -m discord_mcp_alert.server"
 ```
 
 ## PyPI 설치 (향후 지원 예정)
