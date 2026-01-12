@@ -15,24 +15,55 @@
 
 ## 🚀 퀵 스타트 (Quick Start)
 
-1. **설치 및 의존성 구성**:
+> **Mac과 Linux 환경에서 바로 사용 가능합니다!**
+
+### 원클릭 설치 (권장)
+
+```bash
+git clone https://github.com/VinylStage/discord-mcp-alert.git
+cd discord-mcp-alert
+./setup.sh
+```
+
+`setup.sh` 스크립트가 자동으로:
+- ✅ Poetry 및 Python 환경 검증
+- ✅ 의존성 설치
+- ✅ Discord Webhook URL 설정
+- ✅ 테스트 알림 전송
+- ✅ Claude Desktop 자동 등록
+- ✅ Claude Code CLI 등록 명령어 제공
+
+### Claude Code CLI 등록
+
+Claude Code CLI에서 사용하려면:
+
+```bash
+./register_claude_cli.sh
+```
+
+또는 수동으로:
+
+```bash
+claude mcp add discord-alert "poetry --directory $(pwd) run python $(pwd)/src/discord_mcp_alert/server.py"
+```
+
+### 수동 설치 (옵션)
+
+1. **의존성 설치**:
    ```bash
-   git clone https://github.com/VinylStage/discord-mcp-alert.git
-   cd discord-mcp-alert
    poetry install
    ```
 
-2. **설정**:
-   `.env` 파일을 생성하고 Webhook URL을 입력합니다.
+2. **환경 변수 설정**:
    ```bash
-   echo "DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/..." > .env
+   cp .env.example .env
+   # .env 파일을 열어 Discord Webhook URL 입력
    ```
 
-3. **자동 등록**:
+3. **MCP 등록**:
    ```bash
    poetry run python scripts/register_mcp.py
    ```
-   이 스크립트는 Claude Desktop에 설정을 추가하고, CLI용 등록 명령어를 알려줍니다.
 
 ## 📚 문서 (Documentation)
 
@@ -45,11 +76,39 @@
 ## 🛠️ 개발 및 테스트
 
 ```bash
+# MCP 서버 실행
+./run_server.sh
+
 # 단순 알림 테스트
 poetry run python -m discord_mcp_alert.main
 
 # MCP 서버 연동 검증
 poetry run python tests/verify_mcp.py
+
+# MCP 도구 테스트
+poetry run python tests/test_notify_tool.py
+```
+
+## 🌍 포터블 배포 (Portable Deployment)
+
+이 프로젝트는 **어떤 Mac/Linux 환경에서든 즉시 작동**하도록 설계되었습니다:
+
+- ✅ **절대 경로 자동 감지**: 스크립트가 자동으로 프로젝트 위치를 찾습니다
+- ✅ **환경 검증**: 필수 요구사항을 실행 전에 자동으로 확인합니다
+- ✅ **보안**: `.env` 파일은 Git에서 제외되어 안전하게 관리됩니다
+- ✅ **원클릭 설정**: `setup.sh` 하나로 모든 설정 완료
+
+### 다른 머신으로 이동하는 방법
+
+```bash
+# 1. 프로젝트 복사 (Git 또는 직접 복사)
+git clone https://github.com/VinylStage/discord-mcp-alert.git
+
+# 2. 설치 스크립트 실행
+cd discord-mcp-alert
+./setup.sh
+
+# 끝! 바로 사용 가능합니다.
 ```
 
 ## 📄 라이선스
