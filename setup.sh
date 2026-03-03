@@ -97,14 +97,17 @@ echo -e "${BLUE}📱 Registering to Claude Desktop...${NC}"
 poetry run python scripts/register_mcp.py
 echo ""
 
-# Provide Claude Code CLI registration command
-echo -e "${BLUE}🖥️  To register for Claude Code CLI (globally), run:${NC}"
-echo -e "${GREEN}./register_claude_cli.sh${NC}"
-echo ""
-echo -e "${BLUE}   Or manually (global registration):${NC}"
-echo -e "${GREEN}claude mcp add --scope user discord-alert -- bash -c \"cd $SCRIPT_DIR && poetry run python -m discord_mcp_alert.server\"${NC}"
-echo ""
-echo -e "${BLUE}ℹ️  Global registration makes the MCP server available in ALL projects!${NC}"
+# Auto-register Claude Code CLI (globally)
+echo -e "${BLUE}🖥️  Registering to Claude Code CLI (globally)...${NC}"
+if command -v claude &> /dev/null; then
+    claude mcp remove discord-alert 2>/dev/null || true
+    claude mcp add --scope user discord-alert -- poetry --directory "$SCRIPT_DIR" run python -m discord_mcp_alert.server
+    echo -e "${GREEN}✅ Claude Code CLI registration complete!${NC}"
+    echo -e "${BLUE}ℹ️  'notify_discord' tool is now available in ALL projects!${NC}"
+else
+    echo -e "${YELLOW}⚠️  'claude' command not found. Skipping CLI registration.${NC}"
+    echo -e "${BLUE}   Install Claude Code, then run: ${GREEN}./register_claude_cli.sh${NC}"
+fi
 echo ""
 
 # Final summary
@@ -114,9 +117,7 @@ echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 echo -e "${YELLOW}Next steps:${NC}"
 echo -e "  1. Restart Claude Desktop if it's running"
-echo -e "  2. Run ${GREEN}./register_claude_cli.sh${NC} to register for CLI globally"
-echo -e "  3. Test the MCP server: ${BLUE}poetry run python tests/verify_mcp.py${NC}"
-echo -e "  4. ${GREEN}Use 'notify_discord' tool in ANY project!${NC}"
+echo -e "  2. ${GREEN}Use 'notify_discord' tool in ANY project!${NC}"
 echo ""
 echo -e "${YELLOW}Quick commands:${NC}"
 echo -e "  • Run server manually: ${BLUE}./run_server.sh${NC}"

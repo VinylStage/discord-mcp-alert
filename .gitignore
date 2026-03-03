@@ -1,6 +1,7 @@
 __pycache__/
 .env
 .venv/
+.claude/settings.local.json
 
 # Created by https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,windows,linux,dotenv,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,visualstudiocode,windows,linux,dotenv,python

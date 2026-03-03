@@ -35,9 +35,9 @@ echo ""
 # Remove existing registration if any (check both user and local scopes)
 claude mcp remove discord-alert 2>/dev/null || true
 
-# Register the server globally with --scope user and absolute path
+# Register the server globally with --scope user and poetry --directory (cross-platform)
 echo -e "${BLUE}Project location: $SCRIPT_DIR${NC}"
-claude mcp add --scope user discord-alert -- bash -c "cd \"$SCRIPT_DIR\" && poetry run python -m discord_mcp_alert.server"
+claude mcp add --scope user discord-alert -- poetry --directory "$SCRIPT_DIR" run python -m discord_mcp_alert.server
 
 echo ""
 echo -e "${GREEN}✅ Successfully registered globally!${NC}"
