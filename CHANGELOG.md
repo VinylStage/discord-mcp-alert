@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0](https://github.com/VinylStage/discord-mcp-alert/compare/v0.2.0...v0.3.0) (2026-03-03)
+
+
+### Features
+
+* add gitignore ([e557043](https://github.com/VinylStage/discord-mcp-alert/commit/e55704316c20e4acc97215145b5aa7650d5bf758))
+* add portable setup and fix MCP connection issues ([2884e70](https://github.com/VinylStage/discord-mcp-alert/commit/2884e70a360c0e6563c19be1d5efd908d30e5c1f))
+* add Windows support and cross-platform install script (v0.3.0) ([247baed](https://github.com/VinylStage/discord-mcp-alert/commit/247baed6d49669dbed34fbc9c53567254b40b39f))
+* add Windows support and cross-platform install script (v0.3.0) ([92e8004](https://github.com/VinylStage/discord-mcp-alert/commit/92e80046f74291144255837aaff0cadc4e7ebf5a))
+* enable global MCP registration for all projects ([a0b6a92](https://github.com/VinylStage/discord-mcp-alert/commit/a0b6a92411d0133c681c4addaeef8e6c815f2408))
+
 ## [0.3.0] (2026-03-03)
 
 ### Features
