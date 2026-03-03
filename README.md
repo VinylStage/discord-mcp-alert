@@ -11,61 +11,49 @@
 
 - **즉시 알림**: 텍스트 메시지를 Discord 웹훅으로 전송.
 - **간편한 연동**: Claude Desktop 및 Claude Code(CLI) 완벽 지원.
+- **크로스플랫폼**: Windows, Mac, Linux 모두 지원.
 - **오픈소스**: 누구나 기여하고 확장할 수 있는 구조.
 
 ## 🚀 퀵 스타트 (Quick Start)
 
-> **Mac과 Linux 환경에서 바로 사용 가능합니다!**
-
-### 원클릭 설치 (권장)
+Python 3.10+이 설치되어 있다면 **OS에 관계없이** 동일한 명령어로 설치합니다:
 
 ```bash
 git clone https://github.com/VinylStage/discord-mcp-alert.git
 cd discord-mcp-alert
+python install.py
+```
+
+`install.py`가 자동으로 수행하는 작업:
+- ✅ OS 자동 감지 (Windows / macOS / Linux)
+- ✅ 패키지 매니저 자동 감지 (Poetry 또는 pip + venv)
+- ✅ 의존성 설치 및 Discord Webhook URL 설정
+- ✅ 테스트 알림 전송으로 설정 검증
+- ✅ Claude Desktop 및 Claude Code CLI 자동 등록
+
+> **패키지 매니저**: Poetry를 권장합니다. Poetry가 없으면 pip + venv를 자동으로 사용합니다 (pip는 반드시 editable install `-e .` 방식이어야 합니다).
+
+### 플랫폼별 스크립트 (Poetry 전용 대안)
+
+**Mac/Linux:**
+```bash
 ./setup.sh
 ```
 
-`setup.sh` 스크립트가 자동으로:
-- ✅ Poetry 및 Python 환경 검증
-- ✅ 의존성 설치
-- ✅ Discord Webhook URL 설정
-- ✅ 테스트 알림 전송
-- ✅ Claude Desktop 자동 등록
-- ✅ Claude Code CLI 등록 명령어 제공
+**Windows (PowerShell):**
+```powershell
+powershell -ExecutionPolicy Bypass -File setup.ps1
+```
 
-### Claude Code CLI 전역 등록
+### Claude Code CLI 전역 등록 (수동)
 
 **한 번 등록하면 모든 프로젝트에서 사용 가능합니다!**
 
 ```bash
-./register_claude_cli.sh
-```
-
-또는 수동으로:
-
-```bash
-claude mcp add --scope user discord-alert -- bash -c "cd $(pwd) && poetry run python -m discord_mcp_alert.server"
+claude mcp add --scope user discord-alert -- poetry --directory "/path/to/discord-mcp-alert" run python -m discord_mcp_alert.server
 ```
 
 **중요**: `--scope user` 옵션으로 전역 등록하면 어느 프로젝트에서든 Discord 알림을 보낼 수 있습니다.
-
-### 수동 설치 (옵션)
-
-1. **의존성 설치**:
-   ```bash
-   poetry install
-   ```
-
-2. **환경 변수 설정**:
-   ```bash
-   cp .env.example .env
-   # .env 파일을 열어 Discord Webhook URL 입력
-   ```
-
-3. **MCP 등록**:
-   ```bash
-   poetry run python scripts/register_mcp.py
-   ```
 
 ## 📚 문서 (Documentation)
 
@@ -77,41 +65,45 @@ claude mcp add --scope user discord-alert -- bash -c "cd $(pwd) && poetry run py
 
 ## 🛠️ 개발 및 테스트
 
+**Mac/Linux:**
 ```bash
 # MCP 서버 실행
 ./run_server.sh
+```
 
+**Windows:**
+```powershell
+# MCP 서버 실행
+.\run_server.ps1
+```
+
+**공통 (Poetry):**
+```bash
 # 단순 알림 테스트
 poetry run python -m discord_mcp_alert.main
 
 # MCP 서버 연동 검증
 poetry run python tests/verify_mcp.py
+```
 
-# MCP 도구 테스트
-poetry run python tests/test_notify_tool.py
+**pip/venv (Mac/Linux):**
+```bash
+.venv/bin/python -m discord_mcp_alert.main
+```
+
+**pip/venv (Windows):**
+```powershell
+.venv\Scripts\python -m discord_mcp_alert.main
 ```
 
 ## 🌍 포터블 배포 (Portable Deployment)
 
-이 프로젝트는 **어떤 Mac/Linux 환경에서든 즉시 작동**하도록 설계되었습니다:
+이 프로젝트는 **어떤 환경에서든 즉시 작동**하도록 설계되었습니다:
 
 - ✅ **절대 경로 자동 감지**: 스크립트가 자동으로 프로젝트 위치를 찾습니다
 - ✅ **환경 검증**: 필수 요구사항을 실행 전에 자동으로 확인합니다
 - ✅ **보안**: `.env` 파일은 Git에서 제외되어 안전하게 관리됩니다
-- ✅ **원클릭 설정**: `setup.sh` 하나로 모든 설정 완료
-
-### 다른 머신으로 이동하는 방법
-
-```bash
-# 1. 프로젝트 복사 (Git 또는 직접 복사)
-git clone https://github.com/VinylStage/discord-mcp-alert.git
-
-# 2. 설치 스크립트 실행
-cd discord-mcp-alert
-./setup.sh
-
-# 끝! 바로 사용 가능합니다.
-```
+- ✅ **원클릭 설정**: `python install.py` 하나로 모든 OS에서 설정 완료
 
 ## 📄 라이선스
 

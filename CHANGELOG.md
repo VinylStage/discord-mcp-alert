@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.3.0] (2026-03-03)
+
+### Features
+
+* add Windows native support with PowerShell setup scripts (setup.ps1, register_claude_cli.ps1, run_server.ps1)
+* add cross-platform Python setup entry point (install.py) with automatic OS and package manager detection
+* add cross-platform Discord hook (discord-notify.py) replacing bash-only hook for Windows support
+* support pip + venv as alternative to Poetry (editable install)
+
+### Bug Fixes
+
+* fix MCP server registration command to use module syntax (-m discord_mcp_alert.server) instead of file path
+* fix claude mcp add command to use poetry --directory flag instead of bash wrapper (cross-platform)
+* fix scripts/register_mcp.py to auto-detect poetry vs pip/venv environment
+
 ## [0.2.0](https://github.com/VinylStage/discord-mcp-alert/compare/v0.1.1...v0.2.0) (2026-01-11)
 
 
