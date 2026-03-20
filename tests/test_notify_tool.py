@@ -1,14 +1,23 @@
 import asyncio
 import os
+import sys
+from pathlib import Path
+
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+
 async def test_notify_discord_tool():
     """Test the notify_discord tool through MCP server"""
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(PROJECT_ROOT / "src")
+
     server_params = StdioServerParameters(
-        command="poetry",
-        args=["run", "python", "src/discord_mcp_alert/server.py"],
-        env=os.environ.copy(),
+        command=sys.executable,
+        args=["-m", "discord_mcp_alert.server"],
+        env=env,
     )
 
     print("🔌 Connecting to MCP server...")
@@ -17,19 +26,19 @@ async def test_notify_discord_tool():
         async with ClientSession(read, write) as session:
             await session.initialize()
 
-            # List tools
             print("📋 Listing available tools...")
             tools = await session.list_tools()
             for tool in tools.tools:
-                print(f"   - {tool.name}: {tool.description}")
+                print(f"   - {tool.name}: {tool.description[:80]}...")
 
-            # Call notify_discord tool
             print("\n📤 Sending test notification via MCP tool...")
             result = await session.call_tool(
                 "notify_discord",
                 arguments={
                     "message": "🧪 MCP Tool Test: Connection verified! Server is working correctly.",
-                    "event_type": "Test"
+                    "title":   "MCP Test",
+                    "event_type": "info",
+                    "source": "claude_code",
                 }
             )
 

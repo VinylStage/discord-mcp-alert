@@ -1,19 +1,22 @@
 import asyncio
 import os
 import sys
+from pathlib import Path
+
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
-# Ensure src is in path for the server process if needed, 
-# but here we run the server as a subprocess command.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
 
 async def verify_mcp_server():
-    # Define server parameters
-    # We use the same command as the registration script: poetry run python src/server.py
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(PROJECT_ROOT / "src")
+
     server_params = StdioServerParameters(
-        command="poetry",
-        args=["run", "python", "src/discord_mcp_alert/server.py"],
-        env=os.environ.copy(), # Pass current env (including PATH)
+        command=sys.executable,
+        args=["-m", "discord_mcp_alert.server"],
+        env=env,
     )
 
     print("🔌 Connecting to MCP server...")

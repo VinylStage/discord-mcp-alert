@@ -3,116 +3,106 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
-> **Discord MCP Alert**는 LLM(Claude 등)이 직접 Discord 채널로 알림을 보낼 수 있게 해주는 [MCP(Model Context Protocol)](https://modelcontextprotocol.io) 서버입니다.
+> Claude의 모든 작업을 Discord로 알림받는 MCP 서버.
+> Claude Desktop / Claude Code / VS Code / Cowork 전체 지원.
 
-간단한 설정만으로 AI 에이전트가 작업 완료, 에러 발생, 요약 정보 등을 개발자에게 즉시 전달할 수 있습니다.
+---
 
 ## ✨ 주요 기능
 
-- **즉시 알림**: 텍스트 메시지를 Discord 웹훅으로 전송.
-- **간편한 연동**: Claude Desktop 및 Claude Code(CLI) 완벽 지원.
-- **오픈소스**: 누구나 기여하고 확장할 수 있는 구조.
+- **Rich Embed 알림** — 색상·이모지·필드를 갖춘 Discord Embed 박스 포맷
+- **다중 클라이언트 지원** — Claude Desktop, Claude Code CLI, VS Code Extension, Claude Cowork
+- **자동 Hooks** — Claude Code 작업 완료 시 자동 알림 (별도 요청 없이)
+- **이벤트 타입** — success · error · warning · info · start · complete · default
 
-## 🚀 퀵 스타트 (Quick Start)
+---
 
-> **Mac과 Linux 환경에서 바로 사용 가능합니다!**
-
-### 원클릭 설치 (권장)
+## 🚀 설치 (30초)
 
 ```bash
 git clone https://github.com/VinylStage/discord-mcp-alert.git
 cd discord-mcp-alert
-./setup.sh
+./install.sh
 ```
 
-`setup.sh` 스크립트가 자동으로:
-- ✅ Poetry 및 Python 환경 검증
-- ✅ 의존성 설치
-- ✅ Discord Webhook URL 설정
-- ✅ 테스트 알림 전송
-- ✅ Claude Desktop 자동 등록
-- ✅ Claude Code CLI 등록 명령어 제공
+`install.sh`가 대화형으로 진행됩니다:
+1. Python 환경 자동 준비 (Poetry → uv → pip 순으로 탐색)
+2. Discord Webhook URL 입력
+3. 등록할 클라이언트 선택 (Claude Desktop / Claude Code / VS Code / Hooks)
+4. 자동 설정 및 테스트 알림 전송
 
-### Claude Code CLI 전역 등록
+---
 
-**한 번 등록하면 모든 프로젝트에서 사용 가능합니다!**
+## 📋 등록 대상
 
-```bash
-./register_claude_cli.sh
+| 번호 | 대상 | 설명 |
+|------|------|------|
+| 1 | **Claude Desktop** | 앱에서 `notify_discord` 도구 사용 |
+| 2 | **Claude Code CLI** | 터미널에서 전역 사용 가능 |
+| 3 | **VS Code Extension** | VS Code 내 Claude 채팅에서 사용 |
+| 4 | **Claude Code Hooks** | 작업 완료 시 자동 알림 (요청 없이) |
+| A | **전체** | 위 모두 선택 |
+
+> Claude Cowork는 별도 설치 없이 자동 지원됩니다.
+
+---
+
+## 💬 사용법
+
+Claude 채팅에서 자연어로 요청합니다:
+
+```
+"배포 완료됐다고 Discord에 알려줘"
+"에러 발생했다고 Discord error 타입으로 보내줘"
+"작업 시작한다고 Discord에 알림 보내줘"
 ```
 
-또는 수동으로:
+또는 도구를 직접 지정:
 
-```bash
-claude mcp add --scope user discord-alert -- bash -c "cd $(pwd) && poetry run python -m discord_mcp_alert.server"
+```
+notify_discord 써서 "테스트 완료" success 타입으로 보내줘
 ```
 
-**중요**: `--scope user` 옵션으로 전역 등록하면 어느 프로젝트에서든 Discord 알림을 보낼 수 있습니다.
+### event_type 목록
 
-### 수동 설치 (옵션)
+| 값 | 색상 | 이모지 | 사용 상황 |
+|----|------|--------|-----------|
+| `success` | 🟢 초록 | ✅ | 작업 성공 |
+| `error` | 🔴 빨강 | ❌ | 오류 발생 |
+| `warning` | 🟡 노랑 | ⚠️ | 주의 필요 |
+| `info` | 🔵 파랑 | ℹ️ | 일반 정보 |
+| `start` | 🔵 하늘 | 🚀 | 작업 시작 |
+| `complete` | 🟢 밝은 초록 | 🎉 | 워크플로우 완료 |
+| `default` | ⚫ 회색 | 🔔 | 기타 |
 
-1. **의존성 설치**:
-   ```bash
-   poetry install
-   ```
+### source 목록
 
-2. **환경 변수 설정**:
-   ```bash
-   cp .env.example .env
-   # .env 파일을 열어 Discord Webhook URL 입력
-   ```
+| 값 | 표시명 |
+|----|--------|
+| `claude_code` | Claude Code (CLI) |
+| `claude_desktop` | Claude Desktop |
+| `claude_app` | Claude App |
+| `claude_cowork` | Claude Cowork |
+| `claude_vscode` | Claude (VS Code) |
 
-3. **MCP 등록**:
-   ```bash
-   poetry run python scripts/register_mcp.py
-   ```
+---
 
-## 📚 문서 (Documentation)
+## 🔧 관리 스크립트
 
-더 자세한 내용은 다음 문서를 참고하세요:
+| 스크립트 | 설명 |
+|----------|------|
+| `./install.sh` | 대화형 설치 및 재설치 |
+| `./diagnose.sh` | 현재 등록 상태 진단 |
+| `./run_server.sh` | MCP 서버 수동 실행 |
 
-- [📥 설치 가이드 (Installation)](docs/installation.md)
-- [⚙️ 설정 및 등록 가이드 (Configuration)](docs/configuration.md)
-- [🤝 기여 가이드 (Contributing)](CONTRIBUTING.md)
+---
 
-## 🛠️ 개발 및 테스트
+## 📄 상세 문서
 
-```bash
-# MCP 서버 실행
-./run_server.sh
+개발자용 수동 설정 및 구조 설명은 [docs/DEVELOPER.md](docs/DEVELOPER.md)를 참조하세요.
 
-# 단순 알림 테스트
-poetry run python -m discord_mcp_alert.main
-
-# MCP 서버 연동 검증
-poetry run python tests/verify_mcp.py
-
-# MCP 도구 테스트
-poetry run python tests/test_notify_tool.py
-```
-
-## 🌍 포터블 배포 (Portable Deployment)
-
-이 프로젝트는 **어떤 Mac/Linux 환경에서든 즉시 작동**하도록 설계되었습니다:
-
-- ✅ **절대 경로 자동 감지**: 스크립트가 자동으로 프로젝트 위치를 찾습니다
-- ✅ **환경 검증**: 필수 요구사항을 실행 전에 자동으로 확인합니다
-- ✅ **보안**: `.env` 파일은 Git에서 제외되어 안전하게 관리됩니다
-- ✅ **원클릭 설정**: `setup.sh` 하나로 모든 설정 완료
-
-### 다른 머신으로 이동하는 방법
-
-```bash
-# 1. 프로젝트 복사 (Git 또는 직접 복사)
-git clone https://github.com/VinylStage/discord-mcp-alert.git
-
-# 2. 설치 스크립트 실행
-cd discord-mcp-alert
-./setup.sh
-
-# 끝! 바로 사용 가능합니다.
-```
+---
 
 ## 📄 라이선스
 
-이 프로젝트는 MIT 라이선스 하에 배포됩니다.
+MIT License

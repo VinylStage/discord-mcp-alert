@@ -32,20 +32,44 @@ echo -e "${YELLOW}Registering discord-alert MCP server globally...${NC}"
 echo -e "${BLUE}ℹ️  This will make the MCP server available in ALL projects${NC}"
 echo ""
 
-# Remove existing registration if any (check both user and local scopes)
+# Resolve the exact Python executable inside the Poetry virtualenv.
+# Using the direct path prevents Claude Code from picking a different Python
+# version and creating a new empty virtualenv (which would lack 'mcp' etc.).
+echo -e "${YELLOW}Resolving Poetry virtualenv Python path...${NC}"
+VENV_PYTHON=$(cd "$SCRIPT_DIR" && poetry env info --executable 2>/dev/null || true)
+
+if [ -z "$VENV_PYTHON" ] || [ ! -f "$VENV_PYTHON" ]; then
+    # Fallback: build path from venv root
+    VENV_PATH=$(cd "$SCRIPT_DIR" && poetry env info --path 2>/dev/null || true)
+    VENV_PYTHON="$VENV_PATH/bin/python"
+fi
+
+if [ -z "$VENV_PYTHON" ] || [ ! -f "$VENV_PYTHON" ]; then
+    echo -e "${RED}❌ Could not find Poetry virtualenv Python.${NC}"
+    echo -e "${YELLOW}Run 'poetry install' inside $SCRIPT_DIR first.${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}✅ Using Python: $VENV_PYTHON${NC}"
+echo ""
+
+# Remove existing registration if any
 claude mcp remove discord-alert 2>/dev/null || true
 
-# Register the server globally with --scope user and absolute path
+# Register with the direct venv Python path
 echo -e "${BLUE}Project location: $SCRIPT_DIR${NC}"
-claude mcp add --scope user discord-alert -- bash -c "cd \"$SCRIPT_DIR\" && poetry run python -m discord_mcp_alert.server"
+claude mcp add --scope user discord-alert \
+    -e "PYTHONPATH=$SCRIPT_DIR/src" \
+    -- "$VENV_PYTHON" -m discord_mcp_alert.server
 
 echo ""
 echo -e "${GREEN}✅ Successfully registered globally!${NC}"
 echo ""
 echo -e "${YELLOW}📍 Registration details:${NC}"
-echo -e "  • Scope: ${GREEN}user (global)${NC}"
-echo -e "  • Name: discord-alert"
-echo -e "  • Location: $SCRIPT_DIR"
+echo -e "  • Scope:      ${GREEN}user (global)${NC}"
+echo -e "  • Name:       discord-alert"
+echo -e "  • Python:     $VENV_PYTHON"
+echo -e "  • Location:   $SCRIPT_DIR"
 echo ""
 echo -e "${YELLOW}Next steps:${NC}"
 echo -e "  1. Verify registration: ${BLUE}claude mcp list${NC}"
